@@ -8,47 +8,51 @@
 
 namespace FX
 {
-	RenderCore::RenderCore()
-	{
-	}
+    RenderCore::RenderCore()
+    {
+    }
 
 
-	void RenderCore::Render(std::shared_ptr<Scene> scene)
-	{
-		//prepare
+    void RenderCore::Render(std::shared_ptr<Scene> scene)
+    {
+        //prepare
 
 
-		//render
-		m_MainPipeline->Execute();
-		
+        //render
+        m_MainPipeline->Execute();
+        
 
-		//present
-	}
+        //present
+    }
 
-	void RenderCore::tick()
-	{
-		for (auto scene : m_scenes)
-		{
-			scene->update();
-		}
+    void RenderCore::tick()
+    {
+        for (auto scene : m_scenes)
+        {
+            scene->update();
+        }
 
-		for (auto scene : m_scenes)
-		{
-			Render(scene);
-		}
+        for (auto scene : m_scenes)
+        {
+            Render(scene);
+        }
 
-	}
+    }
 
 
-	void RenderCore::Init()
-	{
-		printf("RenderCore::Init\n");
+    void RenderCore::Init()
+    {
+        printf("RenderCore::Init\n");
 
-		m_scenes.emplace_back(std::make_shared<Scene>());
-		std::shared_ptr<Scene> new_scene = m_scenes.back();
-		new_scene->Init();
+        m_scenes.emplace_back(std::make_shared<Scene>());
+        std::shared_ptr<Scene> new_scene = m_scenes.back();
+        new_scene->Init();
 
-	}
+        m_MainPipeline = std::make_shared<Pipeline>();
+        m_MainPipeline->addPass();
+        m_MainPipeline->addDefaultView();
+
+    }
 
 
 

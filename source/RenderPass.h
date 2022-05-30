@@ -5,33 +5,34 @@
 
 namespace FX 
 {
-	class DefaultRenderPass : public Pass
-	{
-	public:
-		void Init();
-		void Render();
-		virtual void Execute() final override;
+    class DefaultRenderPass : public Pass
+    {
+    public:
+        virtual void Init() final override;
+        virtual void Execute() final override;
 
-	private:
+        void Render() {}
 
-		ID3D11RenderTargetView* m_rtv = nullptr;
-		ID3D11SamplerState* m_sample_state = nullptr;
-		ID3D11Texture2D* m_rt;
+    private:
 
-
-		float m_width;
-		float m_height;
-
-	};
+        ID3D11RenderTargetView* m_rtv = nullptr;
+        ID3D11SamplerState* m_sample_state = nullptr;
+        ID3D11Texture2D* m_rt;
 
 
-	class ShaderUtility
-	{
-		static HRESULT CompileShaderFromFile(WCHAR* szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
+        float m_width;
+        float m_height;
+
+    };
+
+
+    class ShaderUtility
+    {
+        static HRESULT CompileShaderFromFile(WCHAR* szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel, ID3DBlob** ppBlobOut);
 
 
 
-	};
+    };
 
 
 }

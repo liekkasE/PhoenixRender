@@ -6,55 +6,55 @@
 namespace FX 
 {
 
-	struct Frustum
-	{
-		float m_NearPlane;
-		float m_FarPlane;
-		float m_Aspect;
-		float m_HFov;
-		float m_VFov;
-	};
+    struct Frustum
+    {
+        float m_NearPlane;
+        float m_FarPlane;
+        float m_Aspect;
+        float m_HFov;
+        float m_VFov;
+    };
 
 
 
-	class Camera
-	{
-	public:
+    class Camera
+    {
+    public:
 
-		const glm::mat4x4 getNewestViewProj()
-		{
-			if ()
-			{
+        const glm::mat4x4 getNewestViewProj()
+        {
+            if ()
+            {
 
-			}
+            }
 
-			return m_ViewProj;
-		}
+            return m_ViewProj;
+        }
 
-		bool checkHadUpdate()
-		{
-			return m_IsUpdated;
-		}
-		
+        bool checkHadUpdate()
+        {
+            return m_IsUpdated;
+        }
+        
 
-	private:
-		glm::vec3 m_Pos;
-		glm::quat m_Ori;
-		Frustum m_Frustum;
-		glm::mat4x4 m_ViewProj;
+    private:
+        glm::vec3 m_Pos;
+        glm::quat m_Ori;
+        Frustum m_Frustum;
+        glm::mat4x4 m_ViewProj;
 
-		bool m_IsUpdated;
-	};
+        bool m_IsUpdated;
+    };
 
 
-	class CameraSystem
-	{
-	public:
-		const Camera&
+    class CameraSystem
+    {
+    public:
+        const Camera&
 
-	private:
-		std::unordered_map<std::string, Camera> m_CameraMap;
-	};
+    private:
+        std::unordered_map<std::string, Camera> m_CameraMap;
+    };
 
 
 }

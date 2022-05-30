@@ -7,17 +7,17 @@
 namespace FX
 {
 
-	std::vector<Vertex> naive_box_vertices = {
-	{glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec4(1.0, 0.0, 0.0, 1.0)},
-	{glm::vec3(-1.0f, +1.0f, -1.0f), glm::vec4(1.0, 0.5, 0.0, 1.0)},
-	{glm::vec3(+1.0f, +1.0f, -1.0f), glm::vec4(1.0, 0.8, 0.0, 1.0)},
-	{glm::vec3(+1.0f, -1.0f, -1.0f), glm::vec4(0.0, 1.0, 0.0, 1.0)},
-	{glm::vec3(-1.0f, -1.0f, +1.0f), glm::vec4(0.1, 0.5, 0.0, 1.0)},
-	{glm::vec3(-1.0f, +1.0f, +1.0f), glm::vec4(0.5, 0.5, 1.0, 1.0)},
-	{glm::vec3(+1.0f, +1.0f, +1.0f), glm::vec4(0.1, 0.8, 1.0, 1.0)},
-	{glm::vec3(+1.0f, -1.0f, +1.0f), glm::vec4(0.5, 1.0, 0.3, 1.0)}
+    std::vector<Vertex> naive_box_vertices = {
+    {glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec4(1.0, 0.0, 0.0, 1.0)},
+    {glm::vec3(-1.0f, +1.0f, -1.0f), glm::vec4(1.0, 0.5, 0.0, 1.0)},
+    {glm::vec3(+1.0f, +1.0f, -1.0f), glm::vec4(1.0, 0.8, 0.0, 1.0)},
+    {glm::vec3(+1.0f, -1.0f, -1.0f), glm::vec4(0.0, 1.0, 0.0, 1.0)},
+    {glm::vec3(-1.0f, -1.0f, +1.0f), glm::vec4(0.1, 0.5, 0.0, 1.0)},
+    {glm::vec3(-1.0f, +1.0f, +1.0f), glm::vec4(0.5, 0.5, 1.0, 1.0)},
+    {glm::vec3(+1.0f, +1.0f, +1.0f), glm::vec4(0.1, 0.8, 1.0, 1.0)},
+    {glm::vec3(+1.0f, -1.0f, +1.0f), glm::vec4(0.5, 1.0, 0.3, 1.0)}
 
-	};
+    };
 
 
     std::vector<Index> naive_box_indices = {

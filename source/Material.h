@@ -7,14 +7,14 @@
 
 namespace FX 
 {
-	class Material
-	{
-	public:
+    class Material
+    {
+    public:
 
 
-	private:
+    private:
 
-	};
+    };
 
 
 }

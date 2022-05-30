@@ -11,10 +11,10 @@ namespace FX
 
 
 
-	class Model
-	{
+    class Model
+    {
 
-	};
+    };
 
 
 }

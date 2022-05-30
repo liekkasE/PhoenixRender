@@ -6,30 +6,32 @@
 
 namespace FX {
 
-	class Pass;
-	class Pipeline
-	{
-	public:
+    class Pass;
+    class Pipeline
+    {
+    public:
+
+        void addPass();
+
+        void Execute();
+
+        void addDefaultView();
+
+        std::weak_ptr<View> GetMainView();
 
 
-		void Execute();
+    private:
 
+        //will be the pass graph
+        Pass* m_DefaultRenderPass;
 
-		std::shared_ptr<View> GetMainView();
-
-
-	private:
-
-		//will be the pass graph
-		std::shared_ptr<Pass> m_DefaultRenderPass;
-
-		ViewTable m_Views;
-		ViewName m_mainViewName = "MainView";
-		
+        ViewTable m_Views;
+        ViewName m_mainViewName = "MainView";
+        
 
 
 
-	};
+    };
 
 
 }

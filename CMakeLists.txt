@@ -29,11 +29,17 @@ endmacro(source_group_by_dir)
 
 set(Third_party_inc_dir "${CMAKE_CURRENT_SOURCE_DIR}/third-party/" "${CMAKE_CURRENT_SOURCE_DIR}/third-party/spdlog")
 set(Phoenix_src_dir "${CMAKE_CURRENT_SOURCE_DIR}/source/")
+set(Phoenix_shader_src_dir "${CMAKE_CURRENT_SOURCE_DIR}/source/shaders")
 
-file(GLOB_RECURSE Sources ${Phoenix_src_dir}/*.hpp ${Phoenix_src_dir}/*.h ${Phoenix_src_dir}/*.cpp)
+file(GLOB_RECURSE Sources ${Phoenix_src_dir}/*.hpp ${Phoenix_src_dir}/*.h ${Phoenix_src_dir}/*.cpp ${Phoenix_shader_src_dir}/*.hlsl)
 #source_group("Sources" FILES ${Sources}) 
 
+file(GLOB_RECURSE Shader_Hlsls ${Phoenix_shader_src_dir}/*.hlsl)
+
 source_group_by_dir(Sources)
+source_group_by_dir(Shader_Hlsls)
+
+set ( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS" ) 
 
 #aux_source_directory("${CMAKE_CURRENT_SOURCE_DIR}/source" Source_cpps_dir)
 add_executable(Phoenix ${Sources}) 

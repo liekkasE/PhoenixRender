@@ -10,21 +10,21 @@ namespace FX
 {
     std::shared_ptr<RHI> g_RHI = nullptr;
 
-	void RHI::createSelf()
-	{
+    void RHI::createSelf()
+    {
         if (g_RHI) return;
 
         g_RHI = std::make_shared<HWD3D11Device>();
-	}
+    }
 
 
-	std::shared_ptr<RHI> RHI::Get()
-	{
+    std::shared_ptr<RHI> RHI::Get()
+    {
         return g_RHI;
-	}
+    }
 
-	int HWD3D11Device::Init()
-	{
+    int HWD3D11Device::Init()
+    {
         HRESULT hr = S_OK;
 
         RECT rc;
@@ -85,7 +85,7 @@ namespace FX
             return hr;
 
         return hr;
-	}
+    }
 
 
     void HWD3D11Device::Cleanup()
@@ -96,19 +96,19 @@ namespace FX
 
 
 
-	void SwapChain::InitSwapChain(IDXGISwapChain* in_pSwapChain)
-	{
-		if (m_pSwapChain) return;
-		m_pSwapChain = std::make_shared<IDXGISwapChain>(in_pSwapChain);
-	}
+    void SwapChain::InitSwapChain(IDXGISwapChain* in_pSwapChain)
+    {
+        if (m_pSwapChain) return;
+        m_pSwapChain = std::shared_ptr<IDXGISwapChain>(in_pSwapChain);
+    }
 
-	ID3D11Texture2D* SwapChain::GetBackBuffer()
-	{
-		ID3D11Texture2D* out_back_buffer = nullptr;
+    ID3D11Texture2D* SwapChain::GetBackBuffer()
+    {
+        ID3D11Texture2D* out_back_buffer = nullptr;
 
-		HRESULT hr = m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&out_back_buffer);
+        HRESULT hr = m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&out_back_buffer);
 
-		return out_back_buffer;
-	}
+        return out_back_buffer;
+    }
 
 }
