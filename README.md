@@ -1,2 +1,2 @@
 # Phoenix
-Cross-platform Core Rendering Engine 
+toy dx Rendering Engine 
