@@ -17,6 +17,8 @@ namespace FX {
 
         void addDefaultView();
 
+        void update();
+
         std::weak_ptr<View> GetMainView();
 
 

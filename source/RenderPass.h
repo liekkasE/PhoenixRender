@@ -18,6 +18,7 @@ namespace FX
         ID3D11RenderTargetView* m_rtv = nullptr;
         ID3D11SamplerState* m_sample_state = nullptr;
         ID3D11Texture2D* m_rt;
+        ID3D11RasterizerState* m_rasterizerState;
 
 
         float m_width;

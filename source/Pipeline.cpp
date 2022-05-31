@@ -27,6 +27,15 @@ namespace FX {
 
     }
 
+    void Pipeline::update()
+    {
+        //update view
+        for (auto& it : m_Views)
+        {
+            it.second->updateCamera();
+        }
+    }
+
     std::weak_ptr<FX::View> Pipeline::GetMainView()
     {
         auto iter = m_Views.find(m_mainViewName);

@@ -67,6 +67,21 @@ namespace FX
         {
             const WCHAR* err_msg = DXGetErrorStringW(hr);
         }
+
+        D3D11_RASTERIZER_DESC rasterizer_state{};
+        rasterizer_state.AntialiasedLineEnable = false;
+        rasterizer_state.CullMode = D3D11_CULL_NONE;
+        rasterizer_state.DepthBias = 0.0f;
+        rasterizer_state.DepthBiasClamp = 0.0f;
+        rasterizer_state.DepthClipEnable = FALSE;
+        rasterizer_state.FillMode = D3D11_FILL_SOLID;
+        rasterizer_state.FrontCounterClockwise = FALSE;
+        rasterizer_state.MultisampleEnable = FALSE;
+        rasterizer_state.ScissorEnable = FALSE;
+        rasterizer_state.SlopeScaledDepthBias = 0.0f;
+
+        GetD3DDevice()->CreateRasterizerState(&rasterizer_state, &m_rasterizerState);
+
     }
 
     void DefaultRenderPass::Execute()
@@ -124,6 +139,8 @@ namespace FX
             GetD3DContext()->VSSetShader(mesh->m_Shader->m_Vs, nullptr, 0);
             GetD3DContext()->PSSetShader(mesh->m_Shader->m_Ps, nullptr, 0);
             GetD3DContext()->PSSetSamplers(0, 1, &m_sample_state);
+
+            GetD3DContext()->RSSetState(m_rasterizerState);
 
             std::shared_ptr<View> spView;
             if (!mainView.expired())

@@ -15,14 +15,19 @@ struct VertexOut
 
 cbuffer cbPreView : register(b0)
 {
-    float4x4 Viewproj;
+    float3 viewPosition;
+	float pad;
+	float4 ViewOri;
+	float4x4 ViewMat;
+	float4x4 ViewProj;
 }
 
 VertexOut VS_Main(VertexIn vs_in)
 {
     VertexOut vs_out;
 
-	vs_out.Pos = mul(Viewproj, float4(vs_in.instancePosition.xyz, 1.0));
+	float3 world_vertex_pos = float3(0.0, 0.0, -1000.0) + vs_in.VertexPos.xyz;
+	vs_out.Pos = mul(ViewProj, float4(world_vertex_pos, 1.0));
     vs_out.Color = vs_in.Color;
     
 	return vs_out;

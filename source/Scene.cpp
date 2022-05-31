@@ -19,7 +19,7 @@ namespace FX
         GlobalContext::Get()->m_MeshManager->addMesh("naive_box", box);
 
         //generate box
-        std::vector<glm::vec4> static_poses;
+        
         for (int i = 0; i < 5; i++)
         {
             float r1 = FX::Math::RandF()*2.0f;
@@ -30,7 +30,7 @@ namespace FX
             oneInstance.m_MeshName = "naive_box";
             oneInstance.m_WorldPos = glm::vec3(r1, r2, r3);
 
-            static_poses.push_back(glm::vec4(r1, r2, r3, 1.0f));
+            m_static_poses.push_back(glm::vec4(r1, r2, r3, 1.0f));
 
             m_Instances.emplace_back(oneInstance);
 
@@ -39,7 +39,8 @@ namespace FX
 
         m_GpuInstanceBuffer = new Buffer(5, sizeof(glm::vec4),
             BufferCreateFlags::Enum::VertexBuffer, BufferBindFlags::Enum::None, DXGI_FORMAT_UNKNOWN,
-            &static_poses[0]);
+            &m_static_poses[0]);
+        m_GpuInstanceBuffer->updateBuffer();
     }
 
     
@@ -50,7 +51,7 @@ namespace FX
 
     void Scene::update()
     {
-
+        
     }
 
 }

@@ -91,17 +91,17 @@ namespace FX {
     {
         D3D11_MAPPED_SUBRESOURCE MappedResource;
 
-        if (m_GpuBuffer.m_desc.Usage &  D3D11_USAGE_STAGING)
+        if (m_GpuBuffer.m_desc.Usage ==  D3D11_USAGE_STAGING)
         {
             GetD3DContext()->Map(m_GpuBuffer.m_gpu_addr, 0, D3D11_MAP_WRITE, 0, &MappedResource);
             memcpy(MappedResource.pData, m_CpuAddr, m_CpuSize);
 
             GetD3DContext()->Unmap(m_GpuBuffer.m_gpu_addr, 0);
         }
-        else if (m_GpuBuffer.m_desc.Usage & D3D11_USAGE_DYNAMIC)
+        else if (m_GpuBuffer.m_desc.Usage == D3D11_USAGE_DYNAMIC)
         {
             //@TODO Need to make better usage of D3D11_MAP_WRITE_DISCARD & D3D11_MAP_NOT_OVERRWRITE
-            GetD3DContext()->Map(m_GpuBuffer.m_gpu_addr, 0, D3D11_MAP_WRITE, 0, &MappedResource);
+            GetD3DContext()->Map(m_GpuBuffer.m_gpu_addr, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource);
             memcpy(MappedResource.pData, m_CpuAddr, m_CpuSize);
 
             GetD3DContext()->Unmap(m_GpuBuffer.m_gpu_addr, 0);
@@ -127,6 +127,7 @@ namespace FX {
         m_ElementSize = elementSize;
         m_noofElements = noofElements;
         m_CpuAddr = data;
+
 
         // Setup buffer
         D3D11_BUFFER_DESC Desc;
@@ -182,6 +183,7 @@ namespace FX {
             Desc.MiscFlags |= D3D11_RESOURCE_MISC_DRAWINDIRECT_ARGS;
         }
 
+        m_GpuBuffer.m_desc = Desc;
 
         if (data)
         {

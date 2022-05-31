@@ -11,32 +11,13 @@ namespace FX
 
     Mesh::Mesh(const std::vector<Vertex>& raw_vb, const std::vector<Index>& raw_ib, const MeshType& mesh_type)
     {
-        std::vector<glm::vec3>* vertexPositions = new std::vector<glm::vec3>();
-        std::vector<glm::vec4>* vertexColors = new std::vector<glm::vec4>();
-        std::vector<Index>* indexes = new std::vector<Index>();
-
-        for (int i = 0; i < raw_vb.size(); i++)
-        {
-            vertexPositions->emplace_back(raw_vb[i].m_Pos);
-            vertexColors->emplace_back(raw_vb[i].m_Color);
-        }
-
-        for (int i = 0; i < raw_ib.size(); i++)
-        {
-            indexes->emplace_back(raw_ib[i]);
-        }
-
-        m_GpuVb = new Buffer(vertexPositions->size(), sizeof(glm::vec3) + sizeof(glm::vec4),
+        m_GpuVb = new Buffer(raw_vb.size(), sizeof(Vertex),
             BufferCreateFlags::Enum::VertexBuffer, BufferBindFlags::Enum::None, DXGI_FORMAT_UNKNOWN,
-            vertexPositions);
+            const_cast<Vertex*>(&raw_vb[0]));
 
-        m_GpuIb = new Buffer(indexes->size(), sizeof(Index),
+        m_GpuIb = new Buffer(raw_ib.size(), sizeof(Index),
             BufferCreateFlags::Enum::IndexBuffer, BufferBindFlags::Enum::None, DXGI_FORMAT_UNKNOWN,
-            indexes);
-
-        delete(vertexPositions);
-        delete(vertexColors);
-        delete(indexes);
+            const_cast<Index*>(&raw_ib[0]));
 
 
         //build shader and layout

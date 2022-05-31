@@ -17,7 +17,7 @@ namespace FX
     {
         //prepare
 
-
+        m_MainPipeline->update();
         //render
         m_MainPipeline->Execute();
         
