@@ -89,9 +89,10 @@ namespace FX
         {
             glm::mat4x4 trans = glm::translate(glm::mat4(1.0f), Ins.m_WorldPos);
             glm::mat4x4 rotation = glm::mat4_cast(Ins.m_Rot);
-            glm::mat4x4 scale = glm::mat4(1.0f);
+            glm::mat4x4 scale = glm::scale(glm::mat4(1.0f),Ins.m_Scale);
 
-            m_CpuInstances[m_AllocatedCnt].m_Trans = glm::transpose(trans) * glm::transpose(rotation) * glm::transpose(scale);
+            m_CpuInstances[m_AllocatedCnt].m_Trans = trans * scale * rotation;
+            m_CpuInstances[m_AllocatedCnt].m_Trans = glm::transpose(m_CpuInstances[m_AllocatedCnt].m_Trans);
             m_AllocatedCnt++;
         }
         else

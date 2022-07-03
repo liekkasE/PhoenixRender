@@ -27,9 +27,11 @@ endmacro(source_group_by_dir)
 
 # add the executable 
 
-set(Third_party_inc_dir "${CMAKE_CURRENT_SOURCE_DIR}/third-party/" "${CMAKE_CURRENT_SOURCE_DIR}/third-party/spdlog")
+set(Third_party_inc_dir "${CMAKE_CURRENT_SOURCE_DIR}/third-party/")
 set(Phoenix_src_dir "${CMAKE_CURRENT_SOURCE_DIR}/source/")
 set(Phoenix_shader_src_dir "${CMAKE_CURRENT_SOURCE_DIR}/source/shaders")
+
+set(Third_party_lib_dir "${CMAKE_CURRENT_SOURCE_DIR}/third-party/spdlog")
 
 file(GLOB_RECURSE Sources ${Phoenix_src_dir}/*.hpp ${Phoenix_src_dir}/*.h ${Phoenix_src_dir}/*.cpp ${Phoenix_shader_src_dir}/*.hlsl)
 #source_group("Sources" FILES ${Sources}) 
@@ -45,8 +47,8 @@ set ( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS" )
 add_executable(Phoenix ${Sources}) 
 
 
-target_link_directories(Phoenix PUBLIC ${Third_party_inc_dir} ${headfiles})
-message(${Third_party_inc_dir})
+target_link_directories(Phoenix PUBLIC ${Third_party_lib_dir} ${headfiles})
+message(${Third_party_lib_dir})
 target_link_libraries(Phoenix spdlog d3d11 d3dcompiler)
 
 # 指定项目编译的时候需要include的文件路径，PROJECT_BINARY_DIR变量为编译发生的目录，也就是make执行的目录，PROJECT_SOURCE_DIR为工程所在的目录 

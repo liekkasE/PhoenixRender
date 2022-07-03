@@ -46,6 +46,8 @@
 
 #include "render/fx_err.h"
 
+#include "spdlog/spdlog.h"
+
 
 
 //#endif

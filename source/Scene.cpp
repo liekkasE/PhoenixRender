@@ -21,14 +21,24 @@ namespace FX
         GlobalContext::Get()->m_MeshManager->addMesh("naive_box", box);
         box->init(Mesh::MeshCreateDesc{ 1 });
 
-        //generate box
-        
+        Mesh* plane = new Mesh(naive_box_vertices, naive_box_indices, MeshType::StaticMesh);
+        GlobalContext::Get()->m_MeshManager->addMesh("plane", plane);
+        plane->init(Mesh::MeshCreateDesc{ 1 });
 
+        //generate box
         MeshInstance oneInstance;
         oneInstance.m_MeshName = "naive_box";
-        oneInstance.m_WorldPos = glm::vec3(0, 0, -10);
+        oneInstance.m_WorldPos = glm::vec3(2.0f, 0.0f, -10);
 
         m_Instances.emplace_back(oneInstance);
+
+        MeshInstance onePlane;
+        onePlane.m_MeshName = "plane";
+        onePlane.m_WorldPos = glm::vec3(0, 0, 0); 
+        onePlane.m_Scale = glm::vec3(30.0f, 0.05f, 30.0f);
+
+        m_Instances.emplace_back(onePlane);
+
   
     }
 
@@ -46,9 +56,12 @@ namespace FX
 
         for (MeshInstance& ins : m_Instances)
         {
-            glm::mat4 mat(1.0f);
-            glm::mat4 rot_matrix = glm::rotate(mat, glm::radians(1.0f* update_cnt), glm::vec3(0,0,1.0f));
-            ins.m_Rot = glm::quat_cast(rot_matrix);
+            if (ins.m_MeshName == "naive_box")
+            {
+                glm::mat4 mat(1.0f);
+                glm::mat4 rot_matrix = glm::rotate(mat, glm::radians(3.0f * update_cnt), glm::vec3(0, 1.0f, 0.0f));
+                ins.m_Rot = glm::quat_cast(rot_matrix);
+            }
         }
 
 

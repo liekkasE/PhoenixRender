@@ -12,6 +12,8 @@
 #include <string.h>
 #include <tchar.h>
 
+#include<stdlib.h>
+
 // Global variables
 
 // The main window class name.
@@ -86,6 +88,22 @@ int WINAPI WinMain(
         NULL
     );
 
+    AllocConsole();
+
+    CONSOLE_FONT_INFOEX cfi;
+    cfi.cbSize = sizeof(cfi);
+    cfi.nFont = 0;
+    cfi.dwFontSize.X = 0;                   // Width of each character in the font
+    cfi.dwFontSize.Y = 18;                  // Height
+    cfi.FontFamily = FF_DONTCARE;
+    cfi.FontWeight = FW_NORMAL;
+    std::wcscpy(cfi.FaceName, L"Consolas"); // Choose your font
+    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+
+    //help to choose console color
+    //system("Color help");
+    system("Color 07");
+
     if (!hWnd)
     {
         MessageBox(NULL,
@@ -105,6 +123,32 @@ int WINAPI WinMain(
     FX::gAppCore = new FX::AppCore(hWnd);
     FX::gAppCore->Init();
 
+    //[2022 - 07 - 04 00:07 : 28.591] [info] ================== = Welcome to Phoenix Renderer !===================
+    spdlog::info("===================Welcome to Phoenix Renderer !===================");
+    
+    //[2022 - 07 - 04 00:07 : 28.592] [warning] Easy padding in numbers like 00000012
+    spdlog::warn("Easy padding in numbers like {:08d}", 12);
+    //[2022 - 07 - 04 00:07 : 28.592][critical] Support for int : 42;  hex: 2a;  oct : 52; bin: 101010
+    spdlog::critical("Support for int: {0:d};  hex: {0:x};  oct: {0:o}; bin: {0:b}", 42);
+    //[2022 - 07 - 04 00:07 : 28.592][info] Support for floats 1.23
+    spdlog::info("Support for floats {:03.2f}", 1.23456);
+    //[2022 - 07 - 04 00:07 : 28.592][info] Positional args are supported too..
+    spdlog::info("Positional args are {1} {0}..", "too", "supported");
+    //[2022 - 07 - 04 00:07 : 28.592][info]    right aligned, left     aligned
+    spdlog::info("{:>8} aligned, {:<8} aligned", "right", "left");
+    // Runtime log levels
+    spdlog::set_level(spdlog::level::info); // Set global log level to info
+    //[2022 - 07 - 04 00:07 : 28.593][debug] This message should be displayed..
+    spdlog::debug("This message should not be displayed!");
+    spdlog::set_level(spdlog::level::trace); // Set specific logger's log level
+    //[00:07 : 28 + 08 : 00][I][thread 18744] This an info message with custom format
+    spdlog::debug("This message should be displayed..");
+    // Customize msg format for all loggers
+    spdlog::set_pattern("[%H:%M:%S %z] [%^%L%$] [thread %t] %v");
+    spdlog::info("This an info message with custom format");
+    spdlog::set_pattern("%+"); // back to default format
+    spdlog::set_level(spdlog::level::info);
+        
     MSG msg = { 0 };
 
     while (1)
