@@ -34,6 +34,10 @@ namespace FX
 
 
         View();
+        ~View()
+        {
+            SAFE_DELETE(m_view_buffer);
+        }
 
         View(const ViewType& viewType);
 

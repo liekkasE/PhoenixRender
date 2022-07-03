@@ -16,18 +16,20 @@ namespace FX
 
     public:
         void InitSwapChain(IDXGISwapChain* in_pSwapChain);
+        ~SwapChain();
+
 
 
         ID3D11Texture2D* GetBackBuffer();
 
 
-        std::weak_ptr<IDXGISwapChain> GetIDXGISwapChain()
+        IDXGISwapChain* GetIDXGISwapChain()
         {
             return m_pSwapChain;
         }
 
     private:
-        std::shared_ptr<IDXGISwapChain> m_pSwapChain = nullptr;
+        IDXGISwapChain* m_pSwapChain = nullptr;
     };
 
 
@@ -45,6 +47,7 @@ namespace FX
 
         virtual int Init() = 0;
         virtual void Cleanup() = 0;
+        virtual ~RHI() {};
         
     };
 
@@ -55,6 +58,9 @@ namespace FX
     public:
         int Init() override;
         void Cleanup() override;
+
+        ~HWD3D11Device();
+
 
         ID3D11Texture2D* GetBackBuffer()
         {
@@ -71,7 +77,7 @@ namespace FX
             return m_context;
         }
 
-        std::weak_ptr<IDXGISwapChain> GetD3D11SwapChain() {
+        IDXGISwapChain* GetD3D11SwapChain() {
             return m_SwapChain.GetIDXGISwapChain();
         }
 

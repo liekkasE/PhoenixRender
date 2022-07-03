@@ -1,16 +1,9 @@
 #pragma once
+#include "GlobalContext.hpp"
 #include "base/FXCommon.h"
 #include "SwapChain.h"
 
-#ifndef SAFE_DELETE
-#define SAFE_DELETE(p)       { if (p) { delete (p);     (p)=NULL; } }
-#endif
-#ifndef SAFE_DELETE_ARRAY
-#define SAFE_DELETE_ARRAY(p) { if (p) { delete[] (p);   (p)=NULL; } }
-#endif
-#ifndef SAFE_RELEASE
-#define SAFE_RELEASE(p)      { if (p) { (p)->Release(); (p)=NULL; } }
-#endif
+
 
 namespace FX {
 
@@ -104,12 +97,9 @@ namespace FX {
 
         GpuBuffer createConstantBuffer(uint64_t request_size);
 
-
-
-
+        ~GpuBufferManager();
 
     private:
-        std::vector<ID3D11Buffer*> m_allocated_buffers;
     };
 
 

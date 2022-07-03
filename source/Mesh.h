@@ -1,6 +1,7 @@
 #pragma once
 #include "base/FXCommon.h"
 #include "SwapChain.h"
+#include "GlobalContext.hpp"
 
 namespace FX 
 {
@@ -88,6 +89,13 @@ namespace FX
     {
     public:
         void addMesh(MeshName name, Mesh* mesh);
+        ~MeshManager()
+        {
+            for (auto& i : m_Meshes)
+            {
+                SAFE_DELETE(i.second);
+            }
+        }
         
 
         Mesh* GetMeshByName(const MeshName& name)

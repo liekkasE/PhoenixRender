@@ -1,4 +1,5 @@
 #include "GlobalContext.hpp"
+#include "SwapChain.h"
 #include "Shader.h"
 
 namespace FX

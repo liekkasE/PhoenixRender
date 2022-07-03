@@ -105,19 +105,31 @@ int WINAPI WinMain(
     FX::gAppCore = new FX::AppCore(hWnd);
     FX::gAppCore->Init();
 
-    // Main message loop:
-    MSG msg;
+    MSG msg = { 0 };
+
     while (1)
     {
-        GetMessage(&msg, NULL, 0, 0);
+        
 
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-        FX::gAppCore->Tick();
+        while (msg.message != WM_QUIT)
+        {
+            // If there are Window messages then process them.
+            if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
+            {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
+            // Otherwise, do animation/game stuff.
+            else
+            {
+                FX::gAppCore->Tick();
+            }
+        }
 
+        break;
     }
 
-    delete(FX::gAppCore);
+    //delete(FX::gAppCore);
 
     return (int)msg.wParam;
 }

@@ -1,14 +1,20 @@
 #pragma once
 
 #include "base/FXCommon.h"
-#include "SwapChain.h"
-#include "RenderCore.hpp"
-
 
 namespace FX
 {
-    class GpuBufferManager;
 
+#define SAFE_DELETE(p)       { if (p) { delete (p);     (p)=NULL; } }
+#define SAFE_DELETE_ARRAY(p) { if (p) { delete[] (p);   (p)=NULL; } }
+#define SAFE_RELEASE(p)      { if (p) { (p)->Release(); (p)=NULL; } }
+
+
+
+    class GpuBufferManager;
+    class RHI;
+    class RenderCore;
+    class MeshManager;
 
     //wanna to create a global manager system, so that we can use these system everywhere
     class GlobalContext
@@ -20,15 +26,14 @@ namespace FX
         void InitSubSystems();
         void Tick();
         GlobalContext();
+        ~GlobalContext();
     public:
         std::shared_ptr<RenderCore> m_RenderCore;
         std::shared_ptr<RHI> m_RHI;
         std::shared_ptr<MeshManager> m_MeshManager;
-        GpuBufferManager* m_gpu_buffer_manager;
-
 
     private:
-        
+       
         static std::shared_ptr<GlobalContext> s_context;
     };
 
@@ -41,6 +46,7 @@ namespace FX
             :m_hWnd(hWnd)
         {
         }
+        ~AppCore() {}
 
         void Init();
 

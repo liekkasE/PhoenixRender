@@ -21,6 +21,11 @@ namespace FX {
 
         std::weak_ptr<View> GetMainView();
 
+        ~Pipeline()
+        {
+            SAFE_DELETE(m_DefaultRenderPass);
+        }
+
 
     private:
 

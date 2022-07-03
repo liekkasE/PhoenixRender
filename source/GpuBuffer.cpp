@@ -265,4 +265,8 @@ namespace FX {
         return res;
     }
 
+    GpuBufferManager::~GpuBufferManager()
+    {
+    }
+
 }

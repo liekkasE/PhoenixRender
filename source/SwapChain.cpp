@@ -98,10 +98,21 @@ namespace FX
 
 
 
+    HWD3D11Device::~HWD3D11Device()
+    {
+        SAFE_RELEASE(m_device);
+        SAFE_RELEASE(m_context);
+    }
+
     void SwapChain::InitSwapChain(IDXGISwapChain* in_pSwapChain)
     {
         if (m_pSwapChain) return;
-        m_pSwapChain = std::shared_ptr<IDXGISwapChain>(in_pSwapChain);
+        m_pSwapChain = in_pSwapChain;
+    }
+
+    SwapChain::~SwapChain()
+    {
+        m_pSwapChain->Release();
     }
 
     ID3D11Texture2D* SwapChain::GetBackBuffer()

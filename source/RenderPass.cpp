@@ -1,7 +1,10 @@
 #include "GlobalContext.hpp"
+#include "RenderCore.hpp"
 #include "RenderPass.h"
 #include "SwapChain.h"
 #include "Shader.h"
+#include "View.h"
+#include "Mesh.h"
 
 namespace FX
 {
@@ -38,11 +41,9 @@ namespace FX
         rtv_desc.Texture2D.MipSlice = 0;
 
         ID3D11Texture2D* backbuffer;
-        auto wp = GetD3DSwapChain();
-        if (wp.expired() == false)
-        {
-            wp.lock()->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backbuffer);
-        }
+
+        GetD3DSwapChain()->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backbuffer);
+
         hr = GetD3DDevice()->CreateRenderTargetView(backbuffer, &rtv_desc, &m_rtv);
         if (hr < 0)
         {
@@ -119,11 +120,7 @@ namespace FX
             it.second->draw();
         }
 
-        auto wp = GetD3DSwapChain();
-        if (wp.expired() == false)
-        {
-            wp.lock()->Present(0, 0);
-        }
+         GetD3DSwapChain()->Present(0, 0);
 
     }
 

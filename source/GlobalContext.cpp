@@ -8,6 +8,10 @@
 namespace FX
 {
 
+    GlobalContext::~GlobalContext()
+    {
+    }
+
     std::shared_ptr<GlobalContext> GlobalContext::s_context = nullptr;
     FX::AppCore* gAppCore = nullptr;
 
