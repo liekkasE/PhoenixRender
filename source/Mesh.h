@@ -7,6 +7,8 @@ namespace FX
     typedef std::string MeshName;
     typedef uint32_t Index;
 
+    //general definition of a instance
+    //managed by scene
     class MeshInstance
     {
     public:
@@ -35,8 +37,20 @@ namespace FX
     class Mesh
     {
     public:
-        Mesh(const std::vector<Vertex>& raw_vb, const std::vector<Index>& raw_ib, const MeshType& mesh_type);
 
+        struct MeshCreateDesc
+        {
+            uint32_t m_MaxInsCnt = 0;
+        };
+
+        //used in vertex shader stage
+        struct VSInstance
+        {
+            glm::mat4x4 m_Trans;
+        };
+
+        Mesh(const std::vector<Vertex>& raw_vb, const std::vector<Index>& raw_ib, const MeshType& mesh_type);
+        void init(const MeshCreateDesc& desc);
 
         Mesh() {}
         Mesh(const Mesh& buf) = delete;
@@ -46,10 +60,23 @@ namespace FX
         Mesh& operator=(const Mesh& buf) = delete;
         ~Mesh();
 
+        void flushInstances();
 
+        void addRenderInstance(const MeshInstance& Ins);
+        void clearRenderInstance();
+
+        void draw() const;
+
+        //PER_VERTEX ATTRIBUTE
         Buffer* m_GpuVb = nullptr;
         Buffer* m_GpuIb = nullptr;
 
+        //PRE_INSTANCE ATTRIBUTE
+        std::vector<VSInstance> m_CpuInstances;
+        Buffer* m_GpuInstances = nullptr;
+        uint32_t m_AllocatedCnt = 0; // cnt in cpu_instances vector
+
+        MeshCreateDesc m_CreateDesc;
 
         Shader* m_Shader;
     };
@@ -67,6 +94,10 @@ namespace FX
         {
             return m_Meshes.find(name) != m_Meshes.end() ? m_Meshes[name] : nullptr;
         }
+
+        void submit();
+
+        const std::unordered_map<MeshName, Mesh*> GetAllMesh() const { return m_Meshes; }
 
     private:
 

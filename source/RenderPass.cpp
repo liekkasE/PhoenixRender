@@ -103,55 +103,20 @@ namespace FX
         vp.TopLeftY = 0;
         GetD3DContext()->RSSetViewports(1, &vp);
 
-        std::unordered_map<MeshName, std::vector<MeshInstance>> DrawMeshMapToMeshInstance;
-        for (const auto& ins : allMeshInstance)
-        {
-            DrawMeshMapToMeshInstance[ins.m_MeshName].push_back(ins);
-        }
 
         // Clear the back buffer 
         float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // red,green,blue,alpha
         GetD3DContext()->OMSetRenderTargets(1, &m_rtv, nullptr);
         GetD3DContext()->ClearRenderTargetView(m_rtv, ClearColor);
 
+        GetD3DContext()->RSSetState(m_rasterizerState);
+
+
+        std::shared_ptr<MeshManager> mesh_manager = GlobalContext::Get()->m_MeshManager;
         //for each mesh, draw instances call
-        for (const auto& it : DrawMeshMapToMeshInstance)
+        for (const auto& it : mesh_manager->GetAllMesh())
         {
-            Mesh* mesh = GlobalContext::Get()->m_MeshManager->GetMeshByName(it.first);
-            size_t ins_cnt = it.second.size();
-
-            GetD3DContext()->IASetInputLayout(mesh->m_Shader->m_Layout);
-
-            // Set vertex buffer
-            UINT pos_vb_stride = sizeof(glm::vec3) + sizeof(glm::vec4);// vertex position and color
-            UINT pos_vb_offset = 0;
-            ID3D11Buffer* pVB = mesh->m_GpuVb->GetBuffer().m_gpu_addr;
-            GetD3DContext()->IASetVertexBuffers(0, 1, &pVB, &pos_vb_stride, &pos_vb_offset);
-
-            UINT ins_vb_stride = sizeof(glm::vec4);// vertex position and color
-            UINT ins_vb_offset = 0;
-            ID3D11Buffer* pInsVB = mainScene->m_GpuInstanceBuffer->GetBuffer().m_gpu_addr;
-            GetD3DContext()->IASetVertexBuffers(1, 1, &pInsVB, &ins_vb_stride, &ins_vb_offset);
-
-            GetD3DContext()->IASetIndexBuffer(mesh->m_GpuIb->GetBuffer().m_gpu_addr, DXGI_FORMAT_R32_UINT,0);
-
-            GetD3DContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-            GetD3DContext()->VSSetShader(mesh->m_Shader->m_Vs, nullptr, 0);
-            GetD3DContext()->PSSetShader(mesh->m_Shader->m_Ps, nullptr, 0);
-            GetD3DContext()->PSSetSamplers(0, 1, &m_sample_state);
-
-            GetD3DContext()->RSSetState(m_rasterizerState);
-
-            std::shared_ptr<View> spView;
-            if (!mainView.expired())
-            {
-                spView = mainView.lock();
-            }
-
-            ID3D11Buffer* pconstant_buffer = spView->GetPerViewConstantBuffer();
-            GetD3DContext()->VSSetConstantBuffers(0, 1, &pconstant_buffer);
-
-            GetD3DContext()->DrawIndexedInstanced((UINT)(mesh->m_GpuIb->GetNoofElements()), (UINT)ins_cnt, 0, 0, 0);
+            it.second->draw();
         }
 
         auto wp = GetD3DSwapChain();

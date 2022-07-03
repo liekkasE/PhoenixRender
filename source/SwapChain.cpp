@@ -81,6 +81,8 @@ namespace FX
             }
         }
 
+        //D3D11CreateDevice()
+
         if (FAILED(hr))
             return hr;
 

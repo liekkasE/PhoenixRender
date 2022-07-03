@@ -33,8 +33,11 @@ namespace FX
 
 
         m_cam_vp.viewMat = glm::lookAtRH(m_cam_vp.position, glm::vec3(0.0f, 0.0f, -2.0f) + m_cam_vp.position, glm::vec3(0.0f, 1.0f, 0.0f));
-        m_cam_vp.viewproj = glm::perspectiveRH(glm::radians(80.0f), 16.0f / 9.0f, 0.01f, 100.0f) * m_cam_vp.viewMat;
-        m_cam_vp.viewproj = glm::transpose(m_cam_vp.viewproj);
+        m_cam_vp.viewMat = glm::transpose(m_cam_vp.viewMat);
+
+        glm::mat4 proj = glm::transpose(glm::perspectiveFovRH_ZO(glm::radians(80.0f), 1280.0f, 720.0f, 0.01f, 100.0f));
+            
+        m_cam_vp.viewproj = proj* m_cam_vp.viewMat;
 
         m_view_buffer->updateBuffer();
     }

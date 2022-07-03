@@ -1,5 +1,7 @@
 #include "Pipeline.h"
 #include "RenderPass.h"
+#include "GlobalContext.hpp"
+#include "SwapChain.h"
 
 namespace FX {
 
@@ -17,6 +19,17 @@ namespace FX {
 
     void Pipeline::Execute()
     {
+
+        std::shared_ptr<View> spView;
+        if (!GetMainView().expired())
+        {
+            spView = GetMainView().lock();
+        }
+
+        ID3D11Buffer* pconstant_buffer = spView->GetPerViewConstantBuffer();
+        GetD3DContext()->VSSetConstantBuffers(0, 1, &pconstant_buffer);
+
+
         m_DefaultRenderPass->Execute();
     }
 

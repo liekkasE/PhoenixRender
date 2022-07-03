@@ -39,10 +39,10 @@ namespace FX
         void update();
 
         std::vector<MeshInstance>& GetAllMeshInstance() { return m_Instances; }
-        Buffer* m_GpuInstanceBuffer = nullptr;
-        std::vector<glm::vec4> m_static_poses;
+        
     private:
         std::vector<MeshInstance> m_Instances;
+
             
     };
 

@@ -18,7 +18,7 @@
 static TCHAR szWindowClass[] = _T("DesktopApp");
 
 // The string that appears in the application's title bar.
-static TCHAR szTitle[] = _T("Windows Desktop Guided Tour Application");
+static TCHAR szTitle[] = _T("Phoenix Renderer");
 
 // Stored instance handle for use in Win32 API calls such as FindResource
 HINSTANCE hInst;
@@ -79,7 +79,7 @@ int WINAPI WinMain(
         szTitle,
         WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, CW_USEDEFAULT,
-        800, 600,
+        1280, 720,
         NULL,
         NULL,
         hInstance,
